@@ -1,0 +1,10 @@
+<p>device works!</p>
+
+<div *ngFor="let device of devices; let i = index">
+    <ul class="list-group">
+    {{ device.serialnumber}}
+    {{ device.description }}
+    {{ device.type }}
+    {{ device.employeeId }}
+    </ul>
+  </div>
