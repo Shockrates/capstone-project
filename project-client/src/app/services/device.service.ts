@@ -8,11 +8,21 @@ import { Device } from '../models/device';
 })
 export class DeviceService {
 
+  deviceList:Device[]=[]
+
   constructor(private http: HttpClient) { }
 
   //RETURNS ALL DEVICES FROM BACKEND
   getAllDevices():Observable<Device[]>{
     return this.http.get<Device[]>('http://localhost:1337/device');
      
+  }
+
+  setDeviceList(list:Device[]){
+    this.deviceList=list
+  }
+
+  returnUnassignedDevices(){
+    return this.deviceList.filter((device)=> device.employeeId === undefined)
   }
 }

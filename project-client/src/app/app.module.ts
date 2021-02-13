@@ -5,20 +5,30 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { DeviceComponent } from './device/device.component';
+import { EmployeeService } from './services/employee.service';
+import { DeviceService } from './services/device.service';
+import { EmployeeFormComponent } from './employee/employee-form/employee-form.component';
+import { HeaderComponent } from './header/header.component';
+import { DeviceFormComponent } from './device/device-form/device-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeeComponent,
     DeviceComponent,
+    EmployeeFormComponent,
+    HeaderComponent,
+    DeviceFormComponent,
     
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [EmployeeService,DeviceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

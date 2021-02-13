@@ -8,10 +8,19 @@ import { Employee } from '../models/employee';
 })
 export class EmployeeService {
 
+  employeesList:Employee[]=[]
+  emmploye?:Employee
   constructor(private http: HttpClient) { }
 
   getAllEmployees():Observable<Employee[]>{
-    return this.http.get<Employee[]>('http://localhost:1337/employee');
-     
+    return this.http.get<Employee[]>('http://localhost:1337/employee'); 
+  }
+
+  setEmployeList(list:Employee[]){
+    this.employeesList=list
+  }
+
+  getEmployeeById(_id:string):any{
+    return this.employeesList.find(e => e._id === _id)?.name;
   }
 }

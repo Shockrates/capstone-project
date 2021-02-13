@@ -1,12 +1,22 @@
-<p>employee works!</p>
+  <div class="row mt-3">
+   
+      <div class="col-4">
+        <div *ngFor="let employee of employees; let i = index" class="row" (click)="selectEmployee(employee)">
+          <p>{{ employee.id}}</p>
+          <p class="ml-3">{{ employee.name }}</p>
+          <p>{{employee.devices}}</p>
+        </div>
+      </div>
+      <div class="col-8">
+        <app-employee-form [selectedEmployee]=employee></app-employee-form>
+      </div>
+    </div>
 
-  <div *ngFor="let employee of employees; let i = index">
-    <ul class="list-group">
-    {{ employee.id}}
-    {{ employee.name }}
-    {{employee.devices}}
-    </ul>
-  </div>
+  
+ 
+  
+  
+  
    
      
       

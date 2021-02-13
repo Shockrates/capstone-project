@@ -10,7 +10,7 @@ import { EmployeeService } from '../services/employee.service';
 export class EmployeeComponent implements OnInit {
 
   employees:Employee[] = []
-  employee?: Employee;
+  employee: any
   
   constructor(private employeeService: EmployeeService) { }
 
@@ -21,16 +21,19 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.getAllEmployees()
       .subscribe(
         (data) => {
-          // this.employee = data;
-          //console.log(data);
+         
           for(let key in data){
-            console.log(data[key]._id);
             this.employees.push(new Employee( data[key].id,data[key]._id, data[key].name, data[key].email, data[key].devices))
-            }
+          }
+          this.employeeService.setEmployeList(this.employees)
         },
         error => {
           console.log(error);
         });
+  }
+
+  selectEmployee(employee: Employee){
+    this.employee=employee
   }
 
 }
