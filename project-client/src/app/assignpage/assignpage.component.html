@@ -1,0 +1,12 @@
+<div class="row mt-5">
+    <div class="col-3">
+        
+        <div *ngFor="let employee of employees" class="employee" (click)="chooseEmployee(employee._id)" >
+            {{employee.name}}
+        </div>
+    </div>
+    <div class="col-9">
+        <app-assign [selectedEmployee]="selectedEmployee"></app-assign>
+    </div>
+</div>
+

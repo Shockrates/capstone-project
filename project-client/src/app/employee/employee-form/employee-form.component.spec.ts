@@ -1,4 +1,8 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Employee } from 'src/app/models/employee';
 
 import { EmployeeFormComponent } from './employee-form.component';
 
@@ -8,7 +12,8 @@ describe('EmployeeFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EmployeeFormComponent ]
+      declarations: [ EmployeeFormComponent ],
+      imports: [HttpClientModule, ReactiveFormsModule, FormsModule, RouterTestingModule],
     })
     .compileComponents();
   });
@@ -22,4 +27,10 @@ describe('EmployeeFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('Check if toggle is CREATE', () => {
+    expect(component.toggle).toBe('CREATE');
+  });
+
+  
 });

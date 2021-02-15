@@ -1,0 +1,27 @@
+<div class="row ml-5 text-center justify-content-center">
+    <div class="col-3">
+        <app-employee-details [employee]="selectedEmployee"></app-employee-details>
+    </div>
+    <div class="col-9">
+        <div class="row">
+            <div class="col-4">
+                <h2>Assigned to {{selectedEmployee && selectedEmployee.name}}</h2> 
+                <div *ngFor="let device of selectedEmployee?.devices" class="device" (click)="unassignDevice(device)">
+                    {{device.description}}
+                </div>
+             </div>
+             <div class="col-4" style="border-left:4px solid blue">
+                 <h2>Unassigned Devices</h2>
+                 <div *ngFor="let device of unassignedDevices" class="device" (click)="assignDevice(device)">
+                     {{device.description}}
+                 </div>
+             </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+

@@ -40,12 +40,12 @@ const getEmployee = async (req:Request, res:Response, next: NextFunction): Promi
                 req.params.id
             );
             const employeeDevices = await Employee.findById(
-                "6023095d72e28c42e0132a8d"
-            ).populate("Device");
-            res.status(200).json({
+                req.params.id
+            ).populate("devices");
+            res.status(200).json(
                 //employee
                 employeeDevices
-            });
+            );
         }else{
             res.status(200).json({
                 message: "Invalid Id"
@@ -60,6 +60,7 @@ const getEmployee = async (req:Request, res:Response, next: NextFunction): Promi
 }
 
 const addEmployee = async (req:Request, res:Response, next: NextFunction): Promise<void> => {
+    logging.info(NAMESPACE, `POST route called`);
     try {
         const body = req.body as Pick<IEmployee, "id"|"name"|"email"|"devices">
       
@@ -88,18 +89,21 @@ const updateEmployee = async (req:Request, res:Response): Promise<void> => {
             params: {id},
             body,
         } = req
+        
+        
         const updateEmployee: IEmployee | null = await Employee.findByIdAndUpdate(
             {_id: id},
-            body
-        )
-        //const allEmployees: IEmployee[] = await Employee.find();
+            body,
+            { new: true }
+        ).populate("devices")
+      
         res
         .status(200)
-        .json({
-            message: "Employee updated",
-            employee: updateEmployee,
-            //Employees: allEmployees
-        })
+        .json(
+            
+            updateEmployee
+            
+        )
     } catch (error) {
         throw error;
     }

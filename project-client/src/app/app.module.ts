@@ -11,6 +11,10 @@ import { EmployeeFormComponent } from './employee/employee-form/employee-form.co
 import { HeaderComponent } from './header/header.component';
 import { DeviceFormComponent } from './device/device-form/device-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EmployeeDetailsComponent } from './employee/employee-details/employee-details.component';
+import { DevicedetailsComponent } from './device/devicedetails/devicedetails.component';
+import { AssignComponent } from './employee/assign/assign.component';
+import { AssignpageComponent } from './assignpage/assignpage.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     EmployeeFormComponent,
     HeaderComponent,
     DeviceFormComponent,
-    
+    EmployeeDetailsComponent,
+    DevicedetailsComponent,
+    AssignComponent,
+    AssignpageComponent,
   ],
   imports: [
     BrowserModule,

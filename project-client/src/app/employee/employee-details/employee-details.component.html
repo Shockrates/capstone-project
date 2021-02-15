@@ -1,0 +1,16 @@
+
+<div class="card" style="width: 18rem; ">
+  <div class="card-body">
+    <h5 class="card-title">{{employee && employee.name}}</h5>
+    <h6 class="card-text" id="Id">id:{{employee && employee.id}}</h6>
+    <h6 class="card-text">Email:{{employee && employee.email}}</h6>
+    <hr>
+    <h6 class="card-text">Assigned Devices:</h6>
+    <ul>
+      <li *ngFor="let device of employee && employee.devices">{{device.description}}</li>
+    </ul>
+  </div>
+</div>
+
+
+  

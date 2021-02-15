@@ -1,10 +1,55 @@
-<p>device works!</p>
-
-<div *ngFor="let device of devices; let i = index">
-    <ul class="list-group">
-    {{ device.serialnumber}}
-    {{ device.description }}
-    {{ device.type }}
-    {{ getEmployeeNames(device.employeeId) }}
-    </ul>
+<div class="row m-3">
+  <div class="col-7">
+    <table class="table">
+      <thead>
+        <tr >
+          <th scope="col">#</th>
+          <th scope="col">Serial-Number</th>
+          <th scope="col">Desciprion</th>
+          <th scope="col">Type</th>
+          <th scope="col">Assigned to:</th>
+          <th scope="col">Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let device of devices; let i = index">
+          <th scope="row">{{i+1}}</th>
+          <td>{{ device.serialnumber}}</td>
+          <td>{{ device.description}}</td>
+          <td>{{ device.type}}</td>
+          <td>{{ device.employeeId?.name}}</td>
+          
+          <td>
+            <button class="btn btn-secondary ml-1" (click)="editDevice(device)">Edit</button>
+            <button class="btn btn-info ml-1" (click)="showDevice(device._id)">Details</button>
+            <button class="btn btn-danger ml-1" (click)="deleteDevice(device._id)">Delete</button>
+            
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+
+  <div  [ngSwitch]="toggle">
+
+    <div *ngSwitchCase="'DELETE'">
+      <app-devicedetails [device]="selectedDevice"></app-devicedetails>
+      <h4>Are you sure you want to delete this device?</h4>
+      <button class="btn btn-danger" (click)="confirmDelete(selectedDevice._id)">Confirm Delete</button>  
+    </div>
+
+    <div  *ngSwitchCase="'DETAILS'">
+      <app-devicedetails [device]="selectedDevice"></app-devicedetails>
+      <button (click)="close()">Hide</button>
+    </div>
+
+    <div  *ngSwitchCase="'EDIT'">
+      <app-device-form [device]="selectedDevice" [toggle]="toggle" (emitDevice)="updateDeviceList($event)"></app-device-form>
+    </div>
+
+    <div *ngSwitchDefault></div>
+  </div>
+
+</div>
+
+

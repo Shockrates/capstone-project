@@ -1,0 +1,12 @@
+<div class="card" style="width: 22rem; ">
+    <div class="card-body">
+      <h5 class="card-title">Description:{{device && device.description}}</h5>
+      <h6 class="card-text">Serial-number:{{device && device.serialnumber}}</h6>
+      <h6 class="card-text">Type:{{ device && device.type}}</h6>
+      <hr>
+      <h6 class="card-text">Assigned Employee: </h6>
+      {{device && device.employeeId?.name}}
+      
+    </div>
+  </div>
+  

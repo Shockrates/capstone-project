@@ -9,7 +9,7 @@ export class Employee {
     email:string;
     devices:any[]
    
-    constructor(id:any,_id:any, name:string,email:string, devices:Device[]=[]){
+    constructor(id:any, name:string,email:string, devices:Device[]=[],_id?:any){
       
         this.id=id;
         this.name=name;
@@ -17,5 +17,20 @@ export class Employee {
         this.devices=devices
         this._id = _id
     }
+
+    getJson(){
+        const deviceIds:string[]=[]
+        this.devices.forEach(device => {
+            deviceIds.push(device._id)
+        })
+        return{
+            "id":this.id,
+            "name":this.name,
+            "email":this.email,
+           "devices":deviceIds  
+        }
+    }
+
+    
 }
 

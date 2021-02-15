@@ -23,10 +23,10 @@ const getDevice = async (req:Request, res:Response, next: NextFunction): Promise
             //logging.error(NAMESPACE,'GET/{id} route error', req.params.id);
             const device: IDevice | null = await Device.findById(
                 req.params.id
-            );
-            res.status(200).json({
+            ).populate('employeeId');
+            res.status(200).json(
                 device
-            });
+            );
         }else{
             res.status(200).json({
                 message: "Invalid Id"
@@ -70,16 +70,17 @@ const updateDevice = async (req:Request, res:Response): Promise<void> => {
         } = req
         const updateDevice: IDevice | null = await Device.findByIdAndUpdate(
             {_id: id},
-            body
+            body,
+            { new: true }
         )
         //const allDevices: IDevice[] = await Device.find();
         res
         .status(200)
-        .json({
-            message: "Device updated",
-            device: updateDevice,
-            //Devices: allDevices
-        })
+        .json(
+            
+            updateDevice,
+           
+        )
     } catch (error) {
         throw error;
     }

@@ -1,22 +1,22 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeviceComponent } from './device.component';
+import { AssignpageComponent } from './assignpage.component';
 
-describe('DeviceComponent', () => {
-  let component: DeviceComponent;
-  let fixture: ComponentFixture<DeviceComponent>;
+describe('AssignpageComponent', () => {
+  let component: AssignpageComponent;
+  let fixture: ComponentFixture<AssignpageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DeviceComponent ],
+      declarations: [ AssignpageComponent ],
       imports: [HttpClientModule],
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeviceComponent);
+    fixture = TestBed.createComponent(AssignpageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,24 +1,23 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { DeviceFormComponent } from './device-form.component';
+import { AssignComponent } from './assign.component';
 
-describe('DeviceFormComponent', () => {
-  let component: DeviceFormComponent;
-  let fixture: ComponentFixture<DeviceFormComponent>;
+describe('AssignComponent', () => {
+  let component: AssignComponent;
+  let fixture: ComponentFixture<AssignComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DeviceFormComponent ],
-      imports: [HttpClientModule, ReactiveFormsModule, FormsModule, RouterTestingModule],
+      declarations: [ AssignComponent ],
+      imports:[RouterTestingModule, HttpClientModule]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeviceFormComponent);
+    fixture = TestBed.createComponent(AssignComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

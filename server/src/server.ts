@@ -46,13 +46,16 @@ router.use(bodyParser.json());
  */
 router.use((req, res, next) => {
     //In  production enviroment have your routed predifined
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin,X-Requested-With, Content-Type, Accept, Authorization');
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Methods");
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+    // res.header('Access-Control-Allow-Origin', '*');
+    // res.header('Access-Control-Allow-Headers', 'Origin,X-Requested-With, Content-Type, Accept, Authorization, Accept,Accept-Language,Content-Language, Access-Control-Allow-Methods');
 
-    if (req.method == 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'GET PATCH DELETE POST PUT');
-        return res.status(200).json({});
-    }
+    // if (req.method == 'OPTIONS') {
+    //     res.header('Access-Control-Allow-Methods', 'GET PATCH DELETE POST PUT');
+    //     return res.status(200).json({});
+    // }
     next();
 });
 
