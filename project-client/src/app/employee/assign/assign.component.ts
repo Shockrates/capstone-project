@@ -27,7 +27,11 @@ export class AssignComponent implements OnInit {
     this.getAllUnassignedDevices()
   }
 
-  
+  /**
+   * 
+   * @param id 
+   * Fetches selected employee from the server
+   */
   getSelectedEmployee(id: string){
     this.employeeService.getEmployee(id)
       .subscribe((data)=>{
@@ -35,6 +39,9 @@ export class AssignComponent implements OnInit {
       })     
   }
 
+  /**
+   * Fetches all devices from the server and returns a table of only the anasigned devices
+   */
   getAllUnassignedDevices(): void {
     this.deviceService.getAllDevices()
       .subscribe(
@@ -51,6 +58,12 @@ export class AssignComponent implements OnInit {
       );
   }
 
+  /**
+   * 
+   * @param assignedDevice 
+   * Updates selected Employee with the values of the passed device. Then Updates the device with the selected user' Id.
+   * Updates SelectedEmployee and unnasigneddevices in order to refect changes to the DOM
+   */
   assignDevice(assignedDevice:Device){
     this.selectedEmployee.devices.push(assignedDevice)
    
@@ -70,6 +83,12 @@ export class AssignComponent implements OnInit {
     })
   }
 
+  /**
+   * 
+   * @param removedDevice 
+   * Removes the device from slectedEmployee's list of assigned devices.
+   * Updates the device in order to remove the user's id  
+   */
   unassignDevice(removedDevice:Device){
 
     
