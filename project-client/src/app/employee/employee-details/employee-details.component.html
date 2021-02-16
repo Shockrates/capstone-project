@@ -7,7 +7,7 @@
     <hr>
     <h6 class="card-text">Assigned Devices:</h6>
     <ul>
-      <li *ngFor="let device of employee && employee.devices">{{device.description}}</li>
+      <li *ngFor="let device of employee && employee.devices"><p>{{device.description}} - {{device.serialnumber}}</p> </li>
     </ul>
   </div>
 </div>

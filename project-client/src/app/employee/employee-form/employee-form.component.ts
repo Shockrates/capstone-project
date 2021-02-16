@@ -24,6 +24,9 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
 
   constructor(private fb: FormBuilder, private employeeService: EmployeeService, private router: Router) {
     
+  /**
+   * Initializes the Form 
+   */
     this.employeeForm = this.fb.group({
       id:['', Validators.required],
       name:['', Validators.compose(
@@ -41,10 +44,7 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
   }
 
   ngOnInit(): void {
-    
-    // this.populateEmployeeForm()
-    
-   
+
   }
 
   ngOnChanges() {
@@ -53,7 +53,9 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
    
     }   
 
-  //
+  /**
+   * Assigns values of Employee object from parent to input fields
+   */
   populateEmployeeForm(){
     this.employeeForm.get('id').setValue(this.employee.id)
     this.employeeForm.get('name').setValue(this.employee.name)
@@ -88,7 +90,10 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
     this.deviceForms.removeAt(i)
   }
 
-  
+  /**
+   * Triggers when From is submitted. Depending on toggle value will either run createEmployee() 
+   * or updateEmployee()
+   */
   submitEmployee(){
     if (this.toggle=="CREATE") {
       this.createEmployee();
@@ -98,7 +103,9 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
     }
   }
   
-
+  /**
+   * Calls the createEmployee() method from service
+   */
   createEmployee(){
     const employee: Employee = new Employee(
       this.employeeForm.get('id').value,
@@ -109,7 +116,11 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
     this.employeeService.createEmployee(employee)
   }
 
-  //Ta
+  /**
+   * Calls the updateEmployee() method from service, 
+   * subcribes response to an Employee object then 
+   * emits the updated employee to the parent
+   */
   updateEmployee():void {
     const employee: Employee = new Employee(
       this.employeeForm.get('id').value,

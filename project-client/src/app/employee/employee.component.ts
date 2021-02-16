@@ -12,6 +12,11 @@ export class EmployeeComponent implements OnInit {
 
   employees:Employee[] = []
   selectedEmployee: Employee  = new Employee('','','');
+  /**
+   * Used to switch visibility of Hide and Delete buttons
+   * Used to modify functionality of EmployeeForm component between update and create.
+   * 
+   */
   toggle:string ="NONE"
   
   constructor(private employeeService: EmployeeService) { }
@@ -20,22 +25,25 @@ export class EmployeeComponent implements OnInit {
     this.getAllEmployees()
   }
 
+  /**
+   * Calls the getAllEmployees() from service and subscribes the result  to an Employee List
+   */
   getAllEmployees(): void {
     this.employeeService.getAllEmployees()
       .subscribe(
         (data) => {
           for(let key in data){
-            
             this.employees.push(new Employee( data[key].id, data[key].name, data[key].email, data[key].devices,data[key]._id))
           }
-          this.employeeService.setEmployeList(this.employees)
         },
         error => {
           console.log(error);
         });
   }
-
-  //Makes an API call for Employee with selected value and shows the EmployeeDetails Component 
+/**
+ * Calls the getEmployee() from service  and subscribes the result to an Employee object passed to the EmployeeDetails Component
+ * HIDE button is made visible 
+ */
   showEmployee(employeeId: string){
   
     this.employeeService.getEmployee(employeeId)
@@ -45,21 +53,25 @@ export class EmployeeComponent implements OnInit {
         this.toggle="DETAILS"    
       })     
   }
-  editEmployee(employee: Employee){
-    
 
+/**
+ * Calls the getEmployee() from service  and subscribes the result to an Employee object passed to the EmployeeForm Component 
+ * EmployeeForm Component is made visible
+ */
+  editEmployee(employee: Employee){
     this.employeeService.getEmployee(employee._id)
       .subscribe((data)=>{
         
         this.selectedEmployee = new Employee(data.id, data.name,data.email, data.devices, data._id)
         this.toggle="EDIT"    
-      })     
-    
-    
-    
-    
+      })      
   }
-
+/**
+ * 
+ * @param updateEmployee 
+ * Runs after an update event is triggered from EmployeeForm Component
+ * Updates the values of the Employee to the DOM
+ */
   updateEmployeeList(updateEmployee:Employee){
 
     for(let i=0; i<this.employees.length;i++){
@@ -76,6 +88,10 @@ export class EmployeeComponent implements OnInit {
    
   }
 
+/**
+ * Calls the getEmployee() from service  and subscribes the result to an Employee object passed to the EmployeeDetails Component 
+ * DELETE button is made visible
+ */
   deleteEmployee(employeeId: string){
     this.employeeService.getEmployee(employeeId)
       .subscribe((data)=>{
@@ -84,18 +100,23 @@ export class EmployeeComponent implements OnInit {
       })     
   }
 
+  /**
+   * 
+   * @param id 
+   * Calls the deleteEmployee() method from service and removes deleted value from DOM
+   */
   confirmDelete(id:string){
-  
     this.employeeService.deleteEmployee(id)
     // get index of object with id:id
     var removeIndex = this.employees.map(function(employee) { return employee._id; }).indexOf(id);
     // remove object
     this.employees.splice(removeIndex, 1);
-
     this.toggle="NONE"
-    
   }
 
+  /**
+   * Hides all children components 
+   */
   close(){
     this.toggle="NONE"
   }

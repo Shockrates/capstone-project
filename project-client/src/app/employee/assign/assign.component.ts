@@ -27,6 +27,7 @@ export class AssignComponent implements OnInit {
     this.getAllUnassignedDevices()
   }
 
+  
   getSelectedEmployee(id: string){
     this.employeeService.getEmployee(id)
       .subscribe((data)=>{
