@@ -1,11 +1,12 @@
 import {IEmployee} from "../types/employee"
 import {model, Schema} from "mongoose"
 
+
 const employeeSchema: Schema = new Schema(
     {   
         id: {
             type: Number,
-            required: true,
+            //required: true,
             unique:true
        
         },
@@ -39,5 +40,6 @@ const employeeSchema: Schema = new Schema(
 //     object.id = _id;
 //     return object;
 //   })
+
 
 export default model<IEmployee>("Employeer",employeeSchema)

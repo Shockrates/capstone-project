@@ -3,7 +3,7 @@ import logging from '../config/logging';
 import { IEmployee } from '../types/employee';
 import Employee from '../models/employee'
 import mongoose from 'mongoose'
-import { IDevice } from '../types/device';
+
 
 const NAMESPACE = 'User Controller';
 
@@ -62,14 +62,17 @@ const getEmployee = async (req:Request, res:Response, next: NextFunction): Promi
 const addEmployee = async (req:Request, res:Response, next: NextFunction): Promise<void> => {
     logging.info(NAMESPACE, `POST route called`);
     try {
-        const body = req.body as Pick<IEmployee, "id"|"name"|"email"|"devices">
-      
+
+        
+        
+        //const body = req.body as Pick<IEmployee, "id"|"name"|"email">
+        const body = req.body as Pick<IEmployee, "name"|"email">
         console.log(body)
         const employee: IEmployee = new Employee({
-            id:body.id,
-            name: body.name,
-            email:body.email,
-            devices:body.devices
+            //id:counter.seq_value,
+            name:body.name,
+            email:body.email
+            // devices:body.devices
           })
             const newEmployee: IEmployee = await employee.save();
             //const allUsers: IEmployee[] = await Employee.find();

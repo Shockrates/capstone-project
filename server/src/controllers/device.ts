@@ -9,7 +9,7 @@ const NAMESPACE = 'Device Controller';
 const getDevices = async (req:Request, res:Response, next: NextFunction): Promise<void> =>{
     logging.info(NAMESPACE, `GET route called`);
     try {
-        const devices: IDevice[] = await Device.find();
+        const devices: IDevice[] = await Device.find().populate('employeeId');
         res.status(200).json(devices)
     } catch (error) {
         throw error;   
