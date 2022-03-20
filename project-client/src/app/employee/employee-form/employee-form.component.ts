@@ -14,7 +14,7 @@ import { EmployeeService } from 'src/app/services/employee.service';
 export class EmployeeFormComponent implements OnInit, OnChanges{
 
   @Input() 
-  employee: Employee = new Employee('','','');
+  employee: Employee = new Employee('','');
  
   @Input() toggle: any="CREATE";
 
@@ -28,7 +28,7 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
    * Initializes the Form 
    */
     this.employeeForm = this.fb.group({
-      id:['', Validators.required],
+      //id:['', Validators.required],
       name:['', Validators.compose(
         [Validators.required, 
         Validators.minLength(3), 
@@ -57,7 +57,7 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
    * Assigns values of Employee object from parent to input fields
    */
   populateEmployeeForm(){
-    this.employeeForm.get('id').setValue(this.employee.id)
+    //this.employeeForm.get('id').setValue(this.employee.id)
     this.employeeForm.get('name').setValue(this.employee.name)
     this.employeeForm.get('email').setValue(this.employee.email)
   
@@ -108,10 +108,10 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
    */
   createEmployee(){
     const employee: Employee = new Employee(
-      this.employeeForm.get('id').value,
       this.employeeForm.get('name').value,
       this.employeeForm.get('email').value,
       this.employeeForm.get('devices').value
+
     ); 
     this.employeeService.createEmployee(employee)
   }
@@ -123,14 +123,14 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
    */
   updateEmployee():void {
     const employee: Employee = new Employee(
-      this.employeeForm.get('id').value,
+      //this.employeeForm.get('id').value,
       this.employeeForm.get('name').value,
       this.employeeForm.get('email').value,
       this.employeeForm.get('devices').value
     ); 
     this.employeeService.updateEmployee(employee,this.employee._id)
       .subscribe((data)=>{
-        const updatedEmployee = new Employee(data.id, data.name,data.email, data.devices, data._id);
+        const updatedEmployee = new Employee(data.name,data.email, data.devices, data.id, data._id);
         this.emitEmployee.emit(updatedEmployee);
           
     })     

@@ -9,7 +9,7 @@ export class Employee {
     email:string;
     devices:any[]
    
-    constructor(id:any, name:string,email:string, devices:Device[]=[],_id?:any){
+    constructor(name:string,email:string, devices:Device[]=[],id?:any,_id?:any){
       
         this.id=id;
         this.name=name;
@@ -27,7 +27,7 @@ export class Employee {
             "id":this.id,
             "name":this.name,
             "email":this.email,
-           "devices":deviceIds  
+            "devices":deviceIds  
         }
     }
 

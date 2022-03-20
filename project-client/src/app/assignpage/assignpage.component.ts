@@ -23,9 +23,9 @@ export class AssignpageComponent implements OnInit {
         (data) => {
           for(let key in data){
             
-            this.employees.push(new Employee( data[key].id, data[key].name, data[key].email, data[key].devices,data[key]._id))
+            this.employees.push(new Employee( data[key].name, data[key].email, data[key].devices, data[key].id, data[key]._id))
           }
-          this.employeeService.setEmployeList(this.employees)
+          //this.employeeService.setEmployeList(this.employees)
         },
         error => {
           console.log(error);
@@ -35,7 +35,7 @@ export class AssignpageComponent implements OnInit {
   chooseEmployee(id:string){
     this.employeeService.getEmployee(id)
       .subscribe((data)=>{
-        this.selectedEmployee = new Employee(data.id, data.name,data.email, data.devices, data._id)
+        this.selectedEmployee = new Employee(data.name,data.email, data.devices, data.id,  data._id)
       })     
 
   }

@@ -11,7 +11,7 @@ import { EmployeeService } from '../services/employee.service';
 export class EmployeeComponent implements OnInit {
 
   employees:Employee[] = []
-  selectedEmployee: Employee  = new Employee('','','');
+  selectedEmployee: Employee  = new Employee('','');
   /**
    * Used to switch visibility of Hide and Delete buttons
    * Used to modify functionality of EmployeeForm component between update and create.
@@ -33,7 +33,7 @@ export class EmployeeComponent implements OnInit {
       .subscribe(
         (data) => {
           for(let key in data){
-            this.employees.push(new Employee( data[key].id, data[key].name, data[key].email, data[key].devices,data[key]._id))
+            this.employees.push(new Employee( data[key].name, data[key].email, data[key].devices, data[key].id, data[key]._id))
           }
         },
         error => {
@@ -49,7 +49,7 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.getEmployee(employeeId)
       .subscribe((data)=>{
         
-        this.selectedEmployee = new Employee(data.id, data.name,data.email, data.devices, data._id)
+        this.selectedEmployee = new Employee(data.name,data.email, data.devices, data.id,  data._id)
         this.toggle="DETAILS"    
       })     
   }
@@ -62,7 +62,7 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.getEmployee(employee._id)
       .subscribe((data)=>{
         
-        this.selectedEmployee = new Employee(data.id, data.name,data.email, data.devices, data._id)
+        this.selectedEmployee = new Employee(data.name,data.email, data.devices, data.id, data._id)
         this.toggle="EDIT"    
       })      
   }
@@ -95,7 +95,7 @@ export class EmployeeComponent implements OnInit {
   deleteEmployee(employeeId: string){
     this.employeeService.getEmployee(employeeId)
       .subscribe((data)=>{
-        this.selectedEmployee = new Employee(data.id, data.name,data.email, data.devices, data._id)
+        this.selectedEmployee = new Employee(data.name,data.email, data.devices,data.id, data._id)
         this.toggle="DELETE"     
       })     
   }

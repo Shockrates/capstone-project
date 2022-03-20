@@ -35,7 +35,7 @@ export class AssignComponent implements OnInit {
   getSelectedEmployee(id: string){
     this.employeeService.getEmployee(id)
       .subscribe((data)=>{
-        this.selectedEmployee = new Employee(data.id, data.name,data.email, data.devices, data._id)    
+        this.selectedEmployee = new Employee(data.name, data.email, data.devices, data.id,  data._id)    
       })     
   }
 
@@ -69,7 +69,7 @@ export class AssignComponent implements OnInit {
    
     this.employeeService.updateEmployee(this.selectedEmployee, this.selectedEmployee._id).subscribe((data)=>{
      
-      const updatedEmployee = new Employee(data.id, data.name,data.email, data.devices, data._id);
+      const updatedEmployee = new Employee(data.name,data.email, data.devices, data.id,  data._id);
    
     })     
     assignedDevice.employeeId=this.selectedEmployee._id
@@ -96,7 +96,7 @@ export class AssignComponent implements OnInit {
     this.selectedEmployee.devices.splice(removeIndex, 1);
 
     this.employeeService.updateEmployee(this.selectedEmployee, this.selectedEmployee._id).subscribe((data)=>{
-      const updatedEmployee = new Employee(data.id, data.name,data.email, data.devices, data._id);
+      const updatedEmployee = new Employee(data.name,data.email, data.devices, data.id,  data._id);
     })  
 
     const newDevice = new Device(removedDevice.serialnumber,removedDevice.description,removedDevice.type,removedDevice._id)
