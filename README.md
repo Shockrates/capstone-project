@@ -1,5 +1,5 @@
 ** <h2>INTRODUCTION</h2>
-This is an accompanying document for the solution of the typescript seminar’s capstone-project. Following this paragraph there are instructions on how to run the project
+This is an accompanying document for the solution of the typescript seminar’s capstone-project. Following this paragraph there are instructions on how to run the project in your local machine. Some information about the server is provided after that. You may skip to the ANGULAR-CLIENT section of the file for more information about the project 
 
 ** <h2>HOW TO RUN</h2>
 Clone or download the project from GitHub.
