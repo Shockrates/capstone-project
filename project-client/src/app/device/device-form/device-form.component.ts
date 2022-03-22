@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { Router } from '@angular/router';
 import { Device } from 'src/app/models/device';
 import { DeviceType } from 'src/app/models/devicetypes';
@@ -30,7 +31,9 @@ export class DeviceFormComponent implements OnInit {
       serialnumber:['', Validators.compose(
         [Validators.required, 
         Validators.minLength(1), 
-        Validators.maxLength(255)]
+        Validators.maxLength(255),
+        RxwebValidators.unique()
+      ]
         )],
       description:['', Validators.compose(
         [Validators.required, 

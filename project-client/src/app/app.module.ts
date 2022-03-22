@@ -15,6 +15,7 @@ import { EmployeeDetailsComponent } from './employee/employee-details/employee-d
 import { DevicedetailsComponent } from './device/devicedetails/devicedetails.component';
 import { AssignComponent } from './employee/assign/assign.component';
 import { AssignpageComponent } from './assignpage/assignpage.component';
+import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { AssignpageComponent } from './assignpage/assignpage.component';
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    RxReactiveFormsModule
   ],
   providers: [EmployeeService,DeviceService],
   bootstrap: [AppComponent]
