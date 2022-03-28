@@ -1,7 +1,7 @@
 import {IEmployee} from "../types/employee"
-import {ICounter} from "../types/counter"
-import counter from "./counter"
+import Counter from "./counter"
 import {CallbackError, model, Schema} from "mongoose"
+import { ICounter } from "../types/counter";
 
 
 const employeeSchema: Schema = new Schema(
@@ -37,22 +37,39 @@ const employeeSchema: Schema = new Schema(
     }
     
 )
-// employeeSchema.method("toJSON", function() {
-//     const { __v, _id, ...object } = this.toObject();
-//     object.id = _id;
-//     return object;
-//   })
-
 
 
 // employeeSchema.pre('save', function(next) {
 //     var doc = this;
-//     counter.findByIdAndUpdate({_id: 'entityId'}, {$inc: { seq: 1} }, function(error: CallbackError | undefined, counter: any)   {
+//     counter.findByIdAndUpdate({_id: 'entityId'}, {$inc: { sequence_value: 1} }, (error: CallbackError, counter) =>  {
 //         if(error)
 //             return next(error);
-//         doc.id = counter!.seq;
+//         if (counter) {
+//             doc.id = counter.sequence_value;
+//         }
 //         next();
 //     });
 // });
+
+
+employeeSchema.pre('save', function(next) {
+    var doc = this;
+
+    Counter.findByIdAndUpdate({_id: 'employeeId'}, {$inc: { sequence_value: 1} }, {new: true})
+    .then((counter) => {
+        if (counter) {
+            doc.id = counter.sequence_value;
+        } else {
+            const newCounter: ICounter = new Counter({
+                _id: 'employeeId',
+                sequence_value: 1
+            })
+            newCounter.save();
+            doc.id = newCounter.sequence_value;
+        }
+        next();
+    })
+    
+});
 
 export default model<IEmployee>("Employeer",employeeSchema)

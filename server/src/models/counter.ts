@@ -5,6 +5,7 @@ const counterSchema: Schema  = new Schema(
     {
         _id: {
                 type: String, 
+                default: 'employeeId',
                 required: true
             },
         sequence_value: { 
