@@ -1,6 +1,7 @@
 import {IEmployee} from "../types/employee"
-import counter from "./counter"
+import Counter from "./counter"
 import {CallbackError, model, Schema} from "mongoose"
+import { ICounter } from "../types/counter";
 
 
 const employeeSchema: Schema = new Schema(
@@ -53,10 +54,18 @@ const employeeSchema: Schema = new Schema(
 
 employeeSchema.pre('save', function(next) {
     var doc = this;
-    counter.findByIdAndUpdate({_id: 'employeeId'}, {$inc: { sequence_value: 1} }, {new: true})
+
+    Counter.findByIdAndUpdate({_id: 'employeeId'}, {$inc: { sequence_value: 1} }, {new: true})
     .then((counter) => {
         if (counter) {
             doc.id = counter.sequence_value;
+        } else {
+            const newCounter: ICounter = new Counter({
+                _id: 'employeeId',
+                sequence_value: 1
+            })
+            newCounter.save();
+            doc.id = newCounter.sequence_value;
         }
         next();
     })
