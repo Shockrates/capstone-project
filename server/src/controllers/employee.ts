@@ -79,7 +79,7 @@ const addEmployee = async (req:Request, res:Response, next: NextFunction): Promi
             //const allUsers: IEmployee[] = await Employee.find();
             res
             .status(201)
-            .json({ message: "User added", User: newEmployee/*, Users: allUsers*/ })
+            .json({ message: "Employee added", Employee: newEmployee/*, Users: allUsers*/ })
 
     } catch (error) {
         throw error;

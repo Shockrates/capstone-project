@@ -10,9 +10,11 @@ import { Employee } from '../models/employee';
 export class EmployeeService {
 
   employeesList:Employee[]=[]
-  emmploye?:Employee
+  
   constructor(private http: HttpClient) { }
-
+  //baseUrl: String = 'http://localhost:9090/authors/'
+  baseUrl: String = 'http://localhost:1337/employee/'
+  
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -23,27 +25,27 @@ export class EmployeeService {
   };
   //API Call to fetch all Employees from backend. Response contains assign devices _id only
   getAllEmployees():Observable<Employee[]>{
-    return this.http.get<Employee[]>('http://localhost:1337/employee'); 
+    return this.http.get<Employee[]>(`${this.baseUrl}`); 
   }
 
    //API Call to fetch one Employee with id from backend. Response contains assign devices details
   getEmployee(id:string):Observable<Employee>{
-    return this.http.get<Employee>('http://localhost:1337/employee/'+id); 
+    return this.http.get<Employee>(`${this.baseUrl}`+id); 
   }
 
   //Creates new employee
   createEmployee(employee:Employee){
-     this.http.post('http://localhost:1337/employee',employee.getJson()).subscribe((result) => console.log(result)); 
+     this.http.post(`${this.baseUrl}`,employee.getJson()).subscribe((result) => console.log(result)); 
   }
 
   //Updates Employee. Its used to assign Devices to Employee
   updateEmployee(employee:Employee,id:string):Observable<Employee>{
-    return this.http.put<Employee>('http://localhost:1337/employee/'+ id, employee.getJson())
+    return this.http.put<Employee>(`${this.baseUrl}`+ id, employee.getJson())
   }
 
   //Deletes Employee
   deleteEmployee(id:string){
-    this.http.delete('http://localhost:1337/employee/'+id)
+    this.http.delete(`${this.baseUrl}`+id)
       .subscribe((response)=>{
         //console.log(response)
       })
@@ -51,11 +53,25 @@ export class EmployeeService {
 
   
 
-  setEmployeList(list:Employee[]){
-    this.employeesList=list
-  }
+  // setEmployeList(){
+  //   /**
+  //  * Calls the getAllEmployees() from service and subscribes the result  to an Employee List
+  //  */
+  //   this.getAllEmployees()
+  //     .subscribe(
+  //       (data) => {
+  //         for(let key in data){
+  //           this.employeesList.push(new Employee( data[key].name, data[key].email, data[key].devices, data[key].id, data[key]._id))
+  //         }
+  //       },
+  //       error => {
+  //         console.log(error);
+  //       });
+  // }
 
-  getEmployeeById(_id:string):any{
-    return this.employeesList.find(e => e._id === _id)?.name;
-  }
+  // getEmployeesList(){
+  //   return this.employeesList;
+  // }
+
+
 }

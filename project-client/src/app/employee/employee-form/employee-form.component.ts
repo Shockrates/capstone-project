@@ -44,7 +44,7 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
   }
 
   ngOnInit(): void {
-
+    console.log(this.employeeService.employeesList);
   }
 
   ngOnChanges() {
@@ -52,7 +52,7 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
     this.populateEmployeeForm()
    
     }   
-
+    
   /**
    * Assigns values of Employee object from parent to input fields
    */
@@ -97,7 +97,7 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
   submitEmployee(){
     if (this.toggle=="CREATE") {
       this.createEmployee();
-      this.router.navigate(['']);
+      // this.router.navigate(['']);
     } else {
       this.updateEmployee();
     }
@@ -114,6 +114,9 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
 
     ); 
     this.employeeService.createEmployee(employee)
+    this.employeeService.employeesList.push(employee) 
+    console.log(this.employeeService.employeesList);
+    this.router.navigate(['']);
   }
 
   /**

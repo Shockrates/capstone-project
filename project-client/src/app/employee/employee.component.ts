@@ -1,5 +1,6 @@
 //import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Employee } from '../models/employee';
 import { EmployeeService } from '../services/employee.service';
 
@@ -11,6 +12,7 @@ import { EmployeeService } from '../services/employee.service';
 export class EmployeeComponent implements OnInit {
 
   employees:Employee[] = []
+  
   selectedEmployee: Employee  = new Employee('','');
   /**
    * Used to switch visibility of Hide and Delete buttons
@@ -18,13 +20,27 @@ export class EmployeeComponent implements OnInit {
    * 
    */
   toggle:string ="NONE"
+  sub: any;
   
-  constructor(private employeeService: EmployeeService) { }
+  
+  constructor(private employeeService: EmployeeService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getAllEmployees()
+    
+   if (this.employeeService.employeesList.length == 0) {
+    this.getAllEmployees();
+    this.employeeService.employeesList = this.employees;
+   } else {
+    this.employees = this.employeeService.employeesList;
+   }
+    
+    //console.log(this.employeeService.employeesList);
+    
   }
 
+  
+
+  
   /**
    * Calls the getAllEmployees() from service and subscribes the result  to an Employee List
    */
