@@ -38,9 +38,7 @@ export class EmployeeComponent implements OnInit {
     
   }
 
-  
-
-  
+    
   /**
    * Calls the getAllEmployees() from service and subscribes the result  to an Employee List
    */

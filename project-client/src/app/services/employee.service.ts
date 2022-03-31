@@ -34,8 +34,8 @@ export class EmployeeService {
   }
 
   //Creates new employee
-  createEmployee(employee:Employee){
-     this.http.post(`${this.baseUrl}`,employee.getJson()).subscribe((result) => console.log(result)); 
+  createEmployee(employee:Employee):Observable<Employee> {
+     return this.http.post<Employee>(`${this.baseUrl}`,employee.getJson()); 
   }
 
   //Updates Employee. Its used to assign Devices to Employee
