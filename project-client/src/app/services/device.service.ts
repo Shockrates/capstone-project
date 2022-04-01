@@ -22,8 +22,8 @@ export class DeviceService {
     return this.http.get<Device>('http://localhost:1337/device/'+id); 
   }
 
-  createDevice(device:Device){
-    this.http.post('http://localhost:1337/device',device.getJson()).subscribe((result) => {console.log(result)}); 
+  createDevice(device:Device):Observable<Device>{
+    return this.http.post<Device>('http://localhost:1337/device',device.getJson()); 
   }
 
   updateDevice(device:Device,id:string):Observable<Device>{

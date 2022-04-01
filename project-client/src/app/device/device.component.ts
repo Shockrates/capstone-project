@@ -20,7 +20,13 @@ export class DeviceComponent implements OnInit {
   constructor(private deviceService: DeviceService) { }
 
   ngOnInit(): void {
-    this.getAllDevices()
+    // if (this.deviceService.deviceList.length == 0) {
+    //   this.getAllDevices();
+    //   this.deviceService.deviceList = this.devices;
+    //  } else {
+    //   this.devices = this.deviceService.deviceList;
+    //  }
+    this.getAllDevices();
   }
 
   getAllDevices(): void {

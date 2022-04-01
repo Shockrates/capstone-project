@@ -47,6 +47,7 @@ export class DeviceFormComponent implements OnInit {
   
   ngOnInit(): void {
     this.populateDeviceForm()
+    console.log(this.deviceService.deviceList);
   }
   ngOnChanges() {
     /**********THIS FUNCTION WILL TRIGGER WHEN PARENT COMPONENT UPDATES 'device'**************/
@@ -64,10 +65,9 @@ export class DeviceFormComponent implements OnInit {
   }
 
   submitDevice(){
-    console.log(this.deviceForm)
     if (this.toggle=="CREATE") {
       this.createDevice();
-      this.router.navigate(['device']);
+      
     } else {
       this.updateDevice();
     }
@@ -83,6 +83,15 @@ export class DeviceFormComponent implements OnInit {
       
     ); 
     this.deviceService.createDevice(device)
+    .subscribe(
+      (response) => {
+        this.router.navigate(['device']);
+      },
+      error => {
+        console.log(error);
+      });
+      //console.log(this.deviceService.deviceList);
+    
   }
 
   //Ta
