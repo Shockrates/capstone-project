@@ -119,7 +119,6 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
       this.employeeService.employeesList.push(new Employee(data.name,data.email, data.devices, data.id, data._id)); 
       console.log(this.employeeService.employeesList);
     })
-    
     this.router.navigate(['']);
   }
 

@@ -74,24 +74,18 @@ export class DeviceFormComponent implements OnInit {
   }
 
   createDevice(){
-
     const device: Device = new Device(
       this.deviceForm.get('serialnumber').value,
       this.deviceForm.get('description').value,
       this.deviceForm.get('type').value,
-      
-      
     ); 
     this.deviceService.createDevice(device)
     .subscribe(
       (response) => {
-        this.router.navigate(['device']);
-      },
-      error => {
-        console.log(error);
+        console.log(response);
+        this.deviceService.deviceList.push(new Device( response.serialnumber, response.description, response.type,response._id, response.employeeId)); 
       });
-      //console.log(this.deviceService.deviceList);
-    
+    this.router.navigate(['device']);
   }
 
   //Ta

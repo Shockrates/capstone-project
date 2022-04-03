@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Device } from '../models/device';
 import { DeviceService } from '../services/device.service';
 import { EmployeeService } from '../services/employee.service';
@@ -20,13 +21,15 @@ export class DeviceComponent implements OnInit {
   constructor(private deviceService: DeviceService) { }
 
   ngOnInit(): void {
-    // if (this.deviceService.deviceList.length == 0) {
-    //   this.getAllDevices();
-    //   this.deviceService.deviceList = this.devices;
-    //  } else {
-    //   this.devices = this.deviceService.deviceList;
-    //  }
-    this.getAllDevices();
+    console.log(this.deviceService.deviceList);
+    if (this.deviceService.deviceList.length == 0) {
+      this.getAllDevices();
+      this.deviceService.deviceList = this.devices;
+     } else {
+      this.devices = this.deviceService.deviceList;
+     }
+     
+    //this.getAllDevices();
   }
 
   getAllDevices(): void {
@@ -35,9 +38,7 @@ export class DeviceComponent implements OnInit {
         (data) => {
           for(let key in data){
             this.devices.push(new Device( data[key].serialnumber, data[key].description, data[key].type,data[key]._id, data[key].employeeId))
-            
           }
-          this.deviceService.setDeviceList(this.devices)
         },
         error => {
           console.log(error);
@@ -54,11 +55,8 @@ export class DeviceComponent implements OnInit {
 
     for(let i=0; i<this.devices.length;i++){
       if(this.devices[i]._id==updateDevice._id){
-      this.devices[i]._id=updateDevice._id  
-      this.devices[i].employeeId=updateDevice.employeeId
-      this.devices[i].serialnumber=updateDevice.serialnumber
-      this.devices[i].description=updateDevice.description
-      this.devices[i].type=updateDevice.type
+
+      this.devices[i] = updateDevice;
       
       }
     }

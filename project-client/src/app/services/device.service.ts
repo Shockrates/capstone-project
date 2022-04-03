@@ -37,15 +37,26 @@ export class DeviceService {
       })
   }
 
-  
-
-  setDeviceList(list:Device[]){
+  setDeviceList(list:Device[]){ 
+    
     this.deviceList=list
+    
   }
 
-  returnUnassignedDevices(){
-    return this.deviceList.filter((device)=> device.employeeId === undefined)
+  refreshDeviceList(){
+    this.getAllDevices()
+    .subscribe(
+      (data) => {
+        this.deviceList= []
+        for(let key in data){
+          this.deviceList.push(new Device( data[key].serialnumber, data[key].description, data[key].type,data[key]._id, data[key].employeeId))
+        }
+        //console.log(this.deviceList);
+      },
+      error => {
+        console.log(error);
+      });
+     
   }
-
-
+ 
 }

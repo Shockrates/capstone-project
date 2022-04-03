@@ -55,7 +55,7 @@ const addDevice = async (req:Request, res:Response, next: NextFunction): Promise
             //const allDevices: IDevice[] = await Device.find();
             res
             .status(201)
-            .json({ message: "Device added", Device: newDevice/*, Devices: allDevices*/ })
+            .json(newDevice)
 
     } catch (error) {
         throw error;
