@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Device } from 'src/app/models/device';
 import { DeviceType } from 'src/app/models/devicetypes';
 import { Employee } from 'src/app/models/employee';
@@ -20,7 +21,7 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
 
   @Output() emitEmployee=new EventEmitter();
   employeeForm: FormGroup | any;
-  
+  subscriptions: Subscription[] = []
 
   constructor(private fb: FormBuilder, private employeeService: EmployeeService, private router: Router) {
     
@@ -45,14 +46,22 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
 
   ngOnInit(): void {
     console.log(this.employeeService.employeesList);
+   
+      
+    //this.subscriptions.forEach(subscription => console.log(subscription));
   }
 
   ngOnChanges() {
     /**********THIS FUNCTION WILL TRIGGER WHEN PARENT COMPONENT UPDATES 'employee'**************/
     this.populateEmployeeForm()
-   
-    }   
+
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
     
+    
+  }
+
   /**
    * Assigns values of Employee object from parent to input fields
    */
@@ -113,13 +122,15 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
       this.employeeForm.get('devices').value
 
     ); 
-    this.employeeService.createEmployee(employee)
+    var sub = this.employeeService.createEmployee(employee)
     .subscribe((data) => {
-      console.log(data);
       this.employeeService.employeesList.push(new Employee(data.name,data.email, data.devices, data.id, data._id)); 
-      console.log(this.employeeService.employeesList);
+      this.router.navigate(['']);
     })
-    this.router.navigate(['']);
+    
+    this.subscriptions.push(sub);
+   
+    
   }
 
   /**
@@ -134,12 +145,14 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
       this.employeeForm.get('email').value,
       this.employeeForm.get('devices').value
     ); 
-    this.employeeService.updateEmployee(employee,this.employee._id)
+    var sub = this.employeeService.updateEmployee(employee,this.employee._id)
       .subscribe((data)=>{
         const updatedEmployee = new Employee(data.name,data.email, data.devices, data.id, data._id);
         this.emitEmployee.emit(updatedEmployee);
           
-    })     
+    })  
+    this.subscriptions.push(sub);   
+   
     
   }
 

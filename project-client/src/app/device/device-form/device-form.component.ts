@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Device } from 'src/app/models/device';
 import { DeviceType } from 'src/app/models/devicetypes';
 import { DeviceService } from 'src/app/services/device.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-device-form',
@@ -23,6 +24,7 @@ export class DeviceFormComponent implements OnInit {
 
   enumKeys:any = [];
   types = DeviceType;
+  subscriptions: Subscription[] = []
 
   constructor(private fb: FormBuilder, private deviceService: DeviceService,private router: Router) {
     
@@ -51,10 +53,11 @@ export class DeviceFormComponent implements OnInit {
   }
   ngOnChanges() {
     /**********THIS FUNCTION WILL TRIGGER WHEN PARENT COMPONENT UPDATES 'device'**************/
-    this.populateDeviceForm()
-    
-   
-    }   
+    this.populateDeviceForm()  
+  }  
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  } 
 
   populateDeviceForm(){
     this.deviceForm.get('serialnumber').setValue(this.device.serialnumber)
@@ -73,19 +76,21 @@ export class DeviceFormComponent implements OnInit {
     }
   }
 
-  createDevice(){
+  createDevice() {
     const device: Device = new Device(
       this.deviceForm.get('serialnumber').value,
       this.deviceForm.get('description').value,
       this.deviceForm.get('type').value,
-    ); 
-    this.deviceService.createDevice(device)
-    .subscribe(
-      (response) => {
-        console.log(response);
-        this.deviceService.deviceList.push(new Device( response.serialnumber, response.description, response.type,response._id, response.employeeId)); 
-      });
-    this.router.navigate(['device']);
+    );
+    var sub = this.deviceService.createDevice(device)
+      .subscribe(
+        (response) => {
+          console.log(response);
+          this.deviceService.deviceList.push(new Device(response.serialnumber, response.description, response.type, response._id, response.employeeId));
+          this.router.navigate(['device']);
+        });
+    
+    this.subscriptions.push(sub);
   }
 
   //Ta
@@ -103,13 +108,13 @@ export class DeviceFormComponent implements OnInit {
       this.device.employeeId
       
     ); 
-    this.deviceService.updateDevice(device,this.device._id)
+    var sub = this.deviceService.updateDevice(device,this.device._id)
       .subscribe((data)=>{
         const updatedDevice = new Device(data.serialnumber, data.description,data.type, data._id, data.employeeId);
         this.emitDevice.emit(updatedDevice);
           
     })     
-    
+    this.subscriptions.push(sub);
   }
 
 }

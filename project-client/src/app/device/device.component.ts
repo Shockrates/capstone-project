@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Device } from '../models/device';
 import { DeviceService } from '../services/device.service';
 import { EmployeeService } from '../services/employee.service';
@@ -14,6 +14,7 @@ import { EmployeeService } from '../services/employee.service';
 export class DeviceComponent implements OnInit {
 
   devices:Device[] = []
+  subscriptions: Subscription[] = []
   selectedDevice: Device = new Device('','',-1);
   toggle:string ="NONE"
   
@@ -32,8 +33,12 @@ export class DeviceComponent implements OnInit {
     //this.getAllDevices();
   }
 
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
   getAllDevices(): void {
-    this.deviceService.getAllDevices()
+    var subscription = this.deviceService.getAllDevices()
       .subscribe(
         (data) => {
           for(let key in data){
@@ -43,6 +48,7 @@ export class DeviceComponent implements OnInit {
         error => {
           console.log(error);
         });
+    this.subscriptions.push(subscription);    
   }
 
   editDevice(device:Device){
@@ -55,9 +61,8 @@ export class DeviceComponent implements OnInit {
 
     for(let i=0; i<this.devices.length;i++){
       if(this.devices[i]._id==updateDevice._id){
-
       this.devices[i] = updateDevice;
-      
+
       }
     }
     this.close()
@@ -65,21 +70,22 @@ export class DeviceComponent implements OnInit {
   }
    //GEts the selected Device and reveals the DETAILS div
   showDevice(deviceID: string){
-    this.deviceService.getDevice(deviceID)
+    var subscription = this.deviceService.getDevice(deviceID)
       .subscribe((data)=>{
         this.selectedDevice = new Device(data.serialnumber, data.description,data.type, data._id, data.employeeId) 
         this.toggle="DETAILS"    
-      })     
+      }) 
+    this.subscriptions.push(subscription);    
   }
 
   //GEts the selected Device and reveals the DELETE div
   deleteDevice(deviceID: string){
-    this.deviceService.getDevice(deviceID)
+    var subscription = this.deviceService.getDevice(deviceID)
       .subscribe((data)=>{
         this.selectedDevice = new Device(data.serialnumber, data.description,data.type, data._id, data.employeeId) 
         this.toggle="DELETE"     
       })   
-
+    this.subscriptions.push(subscription);  
   }
 
   //Deletes selected Device

@@ -1,6 +1,7 @@
 //import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Employee } from '../models/employee';
 import { EmployeeService } from '../services/employee.service';
 
@@ -12,7 +13,6 @@ import { EmployeeService } from '../services/employee.service';
 export class EmployeeComponent implements OnInit {
 
   employees:Employee[] = []
-  
   selectedEmployee: Employee  = new Employee('','');
   /**
    * Used to switch visibility of Hide and Delete buttons
@@ -21,38 +21,43 @@ export class EmployeeComponent implements OnInit {
    */
   toggle:string ="NONE"
   sub: any;
+  subscriptions: Subscription[] = []
   
   
   constructor(private employeeService: EmployeeService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    
-   if (this.employeeService.employeesList.length == 0) {
-    this.getAllEmployees();
-    this.employeeService.employeesList = this.employees;
-   } else {
-    this.employees = this.employeeService.employeesList;
-   }
-    
+
+    if (this.employeeService.employeesList.length == 0) {
+      this.getAllEmployees();
+      this.employeeService.employeesList = this.employees;
+    } else {
+      this.employees = this.employeeService.employeesList;
+    }
+
     //console.log(this.employeeService.employeesList);
-    
+
   }
 
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
     
   /**
    * Calls the getAllEmployees() from service and subscribes the result  to an Employee List
    */
   getAllEmployees(): void {
-    this.employeeService.getAllEmployees()
+    var subscription = this.employeeService.getAllEmployees()
       .subscribe(
         (data) => {
-          for(let key in data){
-            this.employees.push(new Employee( data[key].name, data[key].email, data[key].devices, data[key].id, data[key]._id))
+          for (let key in data) {
+            this.employees.push(new Employee(data[key].name, data[key].email, data[key].devices, data[key].id, data[key]._id))
           }
         },
         error => {
           console.log(error);
         });
+    this.subscriptions.push(subscription)
   }
 /**
  * Calls the getEmployee() from service  and subscribes the result to an Employee object passed to the EmployeeDetails Component
@@ -60,12 +65,13 @@ export class EmployeeComponent implements OnInit {
  */
   showEmployee(employeeId: string){
   
-    this.employeeService.getEmployee(employeeId)
+    var subscription =this.employeeService.getEmployee(employeeId)
       .subscribe((data)=>{
         
         this.selectedEmployee = new Employee(data.name,data.email, data.devices, data.id,  data._id)
         this.toggle="DETAILS"    
-      })     
+      })
+    this.subscriptions.push(subscription)     
   }
 
 /**
@@ -73,12 +79,13 @@ export class EmployeeComponent implements OnInit {
  * EmployeeForm Component is made visible
  */
   editEmployee(employee: Employee){
-    this.employeeService.getEmployee(employee._id)
+    var subscription = this.employeeService.getEmployee(employee._id)
       .subscribe((data)=>{
         
         this.selectedEmployee = new Employee(data.name,data.email, data.devices, data.id, data._id)
         this.toggle="EDIT"    
-      })      
+      })   
+    this.subscriptions.push(subscription)    
   }
 /**
  * 
@@ -107,11 +114,12 @@ export class EmployeeComponent implements OnInit {
  * DELETE button is made visible
  */
   deleteEmployee(employeeId: string){
-    this.employeeService.getEmployee(employeeId)
+    var subscription = this.employeeService.getEmployee(employeeId)
       .subscribe((data)=>{
         this.selectedEmployee = new Employee(data.name,data.email, data.devices,data.id, data._id)
         this.toggle="DELETE"     
-      })     
+      })
+    this.subscriptions.push(subscription)      
   }
 
   /**
