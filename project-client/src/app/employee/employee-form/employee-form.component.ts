@@ -124,7 +124,7 @@ export class EmployeeFormComponent implements OnInit, OnChanges{
     ); 
     var sub = this.employeeService.createEmployee(employee)
     .subscribe((data) => {
-      this.employeeService.employeesList.push(new Employee(data.name,data.email, data.devices, data.id, data._id)); 
+      //this.employeeService.employeesList.push(new Employee(data.name,data.email, data.devices, data.id, data._id)); 
       this.router.navigate(['']);
     })
     

@@ -23,14 +23,14 @@ export class DeviceComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.deviceService.deviceList);
-    if (this.deviceService.deviceList.length == 0) {
-      this.getAllDevices();
-      this.deviceService.deviceList = this.devices;
-     } else {
-      this.devices = this.deviceService.deviceList;
-     }
+    // if (this.deviceService.deviceList.length == 0) {
+    //   this.getAllDevices();
+    //   this.deviceService.deviceList = this.devices;
+    //  } else {
+    //   this.devices = this.deviceService.deviceList;
+    //  }
      
-    //this.getAllDevices();
+    this.getAllDevices();
   }
 
   ngOnDestroy() {

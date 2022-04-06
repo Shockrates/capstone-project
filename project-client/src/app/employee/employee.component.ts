@@ -28,15 +28,15 @@ export class EmployeeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.employeeService.employeesList.length == 0) {
-      this.getAllEmployees();
-      this.employeeService.employeesList = this.employees;
-    } else {
-      this.employees = this.employeeService.employeesList;
-    }
+    // if (this.employeeService.employeesList.length == 0) {
+    //   this.getAllEmployees();
+    //   this.employeeService.employeesList = this.employees;
+    // } else {
+    //   this.employees = this.employeeService.employeesList;
+    // }
 
     //console.log(this.employeeService.employeesList);
-
+    this.getAllEmployees();
   }
 
   ngOnDestroy() {
@@ -114,12 +114,19 @@ export class EmployeeComponent implements OnInit {
  * DELETE button is made visible
  */
   deleteEmployee(employeeId: string){
-    var subscription = this.employeeService.getEmployee(employeeId)
-      .subscribe((data)=>{
-        this.selectedEmployee = new Employee(data.name,data.email, data.devices,data.id, data._id)
-        this.toggle="DELETE"     
-      })
-    this.subscriptions.push(subscription)      
+    for(let i=0; i<this.employees.length;i++){
+      if(this.employees[i]._id==employeeId){
+        this.selectedEmployee = this.employees[i]
+        this.toggle="DELETE"    
+
+      }
+    }
+    // var subscription = this.employeeService.getEmployee(employeeId)
+    //   .subscribe((data)=>{
+    //     this.selectedEmployee = new Employee(data.name,data.email, data.employees,data.id, data._id)
+    //     this.toggle="DELETE"     
+    //   })
+    // this.subscriptions.push(subscription)      
   }
 
   /**

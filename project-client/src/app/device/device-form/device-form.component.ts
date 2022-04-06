@@ -86,7 +86,7 @@ export class DeviceFormComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log(response);
-          this.deviceService.deviceList.push(new Device(response.serialnumber, response.description, response.type, response._id, response.employeeId));
+          //this.deviceService.deviceList.push(new Device(response.serialnumber, response.description, response.type, response._id, response.employeeId));
           this.router.navigate(['device']);
         });
     
